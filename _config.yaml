@@ -1,5 +1,17 @@
 title: Emma Xing
-description: Software Engineer · Curious Human
+description: 
 baseurl: "" # leave blank for user/organization site
 url: "https://emma-x1.github.io/"
 theme: minima
+
+lsi: false
+safe: true
+source: [your repo's top level directory]
+incremental: false
+highlighter: rouge
+gist:
+  noscript: false
+kramdown:
+  math_engine: mathjax
+  syntax_highlighter: rouge
+
