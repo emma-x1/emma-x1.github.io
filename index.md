@@ -1,6 +1,6 @@
 ---
 layout: home
-title:
+title: Welcome :)
 ---
 
 # Hi, I'm Emma.
