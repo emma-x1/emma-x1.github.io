@@ -11,4 +11,9 @@ Right now, I'm ...
 - a community builder
 - learning and building tech that I think is a net positive
 
-Reach out! Contact me at emma.xing@uwaterloo.ca, or on [LinkedIn](https://www.linkedin.com/in/emmaxing/).
+Reach out! Contact me at [emma.xing@uwaterloo.ca](mailto:emma.xing@uwaterloo.ca), or on [LinkedIn](https://www.linkedin.com/in/emmaxing/).
+
+Links:
+- [LinkedIn](https://www.linkedin.com/in/emmaxing/)
+- [GitHub](https://github.com/emma-x1)
+- [X](https://x.com/emm4x3)
