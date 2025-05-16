@@ -11,6 +11,18 @@ Right now, I'm ...
 - a community builder
 - learning and building tech that I think is a net positive
 
+This is what I'm passionate about:
+- "Sparkly" people and changemakers
+- Machine learning and neural networks
+- Extracting stories from data
+- Running 
+
+
+## Here's what I've been up to:
+### Experience
+### Community
+### Misc
+
 Reach out! Contact me at [emma.xing@uwaterloo.ca](mailto:emma.xing@uwaterloo.ca), or on [LinkedIn](https://www.linkedin.com/in/emmaxing/).
 
 Links:
