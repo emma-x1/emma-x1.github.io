@@ -15,7 +15,7 @@ Hello, welcome to my personal site. This is a collection of things that I do and
 - learning and building tech that I think is a net positive
 
 ## This is what I'm passionate about:
-- "Sparkly" people and changemakers
+- Sparkly people and changemakers
 - Machine learning and neural networks
 - Extracting stories from data
 - Running 
