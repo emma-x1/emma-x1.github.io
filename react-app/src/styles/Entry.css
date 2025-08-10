@@ -1,0 +1,45 @@
+.entrypoint {
+    background-color: var(--mywhite);
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+
+.entrypoint-content {
+    text-align: center;
+    max-width: 40rem;
+    padding: 2rem;
+    gap: 1rem;
+}
+
+.entrypoint-content a {
+    margin-right: 1rem;
+    display: inline-block;
+}
+
+.entrypoint-button {
+    border-radius: var(--radius);
+    cursor: pointer;
+}
+
+.entrypoint-button-logo
+
+.entrypoint-flowers {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+}
+
+.entrypoint-flowers img {
+    height: 4rem;
+    opacity: 0.8;
+}

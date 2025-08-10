@@ -1,0 +1,217 @@
+/* misc */
+button {
+  background-color: var(--mydark);
+  color: var(--mywhite);
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--myradius) !important;
+}
+
+button:hover {
+  background-color: var(--mydark); /* darker accent on hover */
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: var(--myblack);
+}
+
+.page-with-nav {
+  padding-top: 60px; 
+}
+
+.page-no-nav {
+  padding: 0;
+}
+
+/* nav */
+
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2rem;
+    background-color: var(--mylight);
+    color: var(--mydark);
+    font-family: var(--font-serif);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+  }
+
+  .nav-hamburger {
+    display: none;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }  
+
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: absolute;
+    top: 60px;
+    right: 1rem;
+    background: var(--mywhite);
+    padding: 1rem;
+    border-radius: var(--myradius);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  
+  .nav-bar-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--font-serif);
+  }
+  
+  .nav-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .nav-bar-right a {
+    text-decoration: none;
+    color: var(--font-serif);
+    transition: opacity 0.3s;
+  }
+  
+  .nav-bar-right a:hover {
+    opacity: 0.7;
+  }
+  
+  @media (max-width: 768px) {
+    .desktop-menu {
+      display: none;
+    }
+  
+    .nav-hamburger {
+      display: block;
+    }
+  }
+
+/* dark mode toggle */
+/* .theme-toggle-btn {
+    background: transparent;
+    background-color: var(--myblack);
+    cursor: pointer;
+    border-radius: var(--myradius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  } */
+
+/* hero */
+.hero {
+    padding: 4rem 2rem;
+    padding-top: 5rem;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    background-color: var(--mywhite);
+}
+
+.hero-signature-path {
+  transform: rotate(-40deg);
+  transform-origin: center;
+
+  stroke-width: 10;
+  fill: none;
+}
+
+.hero-signature {
+  max-width: 100%;
+  width: 40rem;
+  aspect-ratio: 4/1;
+  justify-content: center; 
+  align-items: center; 
+  overflow: hidden;
+}
+
+/* intro */
+.intro {
+  padding: 4rem 2rem;
+  background-color: var(--mywhite);
+}
+
+
+/* professional */
+.experience {
+  padding: 4rem 2rem;
+  background-color: var(--mywhite);
+}
+
+.exp-card {
+    background: var(--mylight);
+    border-radius: var(--myradius);
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+/* projects */
+.projects {
+  padding: 4rem 2rem;
+  background-color: var(--mywhite);
+}
+
+.proj-card {
+  background: var(--mydark);
+  border-radius: var(--myradius);
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.proj-card h3, .proj-card p {
+  color: var(--mywhite)
+}
+
+.project-modal {
+  position: fixed; /* stays on screen even when scrolling */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(255, 255, 255, 0.5); 
+  z-index: 9999; 
+}
+
+.project-modal-content {
+  background-color: var(--mywhite);
+  padding: 4rem;
+  border-radius: var(--myradius);
+  max-width: 48rem;
+  max-height: 48rem;
+  overflow-y: auto;
+}
+
+.project button {
+  padding: 0.6rem;
+}
+
+
+/* contact */
+.contact {
+  padding: 4rem 2rem;
+  background-color: var(--mywhite);
+}
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* spacers */
+.section-divider {
+  background-color: var(--mywhite);
+}
