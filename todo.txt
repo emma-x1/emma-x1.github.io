@@ -1,0 +1,14 @@
+hero section like signed
+experience section
+projects section
+- build project cards
+overall styling/margins
+source images + designs
+- draw flowers (& stars?)
+for headers add offset (for nav bar)
+recruiter view vs personal?
+what i'm working on now
+update github
+resizability
+content: cooking! running!
+put this on 
