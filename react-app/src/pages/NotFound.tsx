@@ -9,7 +9,7 @@ export default function NotFound() {
         <div className="entrypoint">
             <div className="entrypoint-content">
                 <h1>Page Not Found</h1>
-                <a href="/" target="_blank" rel="noopener noreferrer">Try again?</a>
+                <a href="/">Try again?</a>
                 <div className="entrypoint-button">
                     {/* <button onClick={goToMain}>View more 
                         <div className="entrypoint-button-logo"><img src="logo-light.png"></img></div>
