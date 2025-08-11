@@ -15,7 +15,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '22'   # or whichever Node version you want
+        node-version: '22'   
 
     - name: Install dependencies 1
       run: npm install
@@ -25,7 +25,7 @@ jobs:
       working-directory: ./react-app
 
     - name: Build project
-      run: npm run build
+      run: npm run build && touch dist/.nojekyll
       working-directory: ./react-app
 
     - name: Deploy to GitHub Pages
