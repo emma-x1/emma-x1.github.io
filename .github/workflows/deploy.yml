@@ -25,7 +25,11 @@ jobs:
       working-directory: ./react-app
 
     - name: Build project
-      run: npm run build && touch dist/.nojekyll
+      run: npm run build
+      working-directory: ./react-app
+
+    - name: Add .nojekyll
+      run: touch dist/.nojekyll
       working-directory: ./react-app
 
     - name: Deploy to GitHub Pages
