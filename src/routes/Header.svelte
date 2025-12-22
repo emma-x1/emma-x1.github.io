@@ -12,7 +12,7 @@
         <p>I’m exploring both full stack and machine learning roles.</p>
         <p>I’m passionate about building community and leveraging tech for good.</p>
         <div>
-        <p>If this resonates with you, let's connect!</p>
+        <em><p>If this resonates with you, let's connect!</p></em>
             <a href="mailto:emma.xing@uwaterloo.ca" target="_blank" rel="noopener noreferrer">emma.xing@uwaterloo.ca</a>
             <a href="https://www.linkedin.com/in/emmaxing/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href="https://github.com/emma-x1" target="_blank" rel="noopener noreferrer">GitHub</a>
