@@ -17,8 +17,11 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Clean Vite cache
+        run: rm -rf node_modules/.vite
+
       - name: Install dependencies
-        run: npm i
+        run: npm ci
 
       - name: build
         env:
