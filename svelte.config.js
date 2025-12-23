@@ -25,6 +25,6 @@ const config = {
 	},
 };
 
-config.paths = { base: process.hasUncaughtExceptionCaptureCallback.includes('dev') ? '' : '/emma-x1.github.io'}
+config.paths = { base: process.argv.includes('dev') ? '' : '/emma-x1.github.io'}
 
 export default config;
