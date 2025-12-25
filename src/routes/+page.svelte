@@ -16,8 +16,9 @@
 <Divider />
 <Misc />
 <Divider />
-<Footer />
 -->
+<Footer />
+
 
 
 

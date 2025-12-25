@@ -4,8 +4,10 @@
     import x from '$lib/assets/social-x.png';
 </script>
 
-<div>
-    <p> Emma Xing </p>
+<div class=container>
+    <a href="emma-x1.github.io/">
+        <p> Emma Xing </p>
+    </a>
     <div class=logos>
         <a href="https://www.linkedin.com/in/emmaxing/">
             <img src={linkedin}/>
@@ -17,10 +19,24 @@
             <img src={x}/>
         </a>
     </div>
+
+    <div class=watering>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <a href="https://cs.uwatering.com/#emma-x1.github.io/?nav=prev">←</a>
+            <a href="https://cs.uwatering.com/#emma-x1.github.io/" target="_blank">
+                <img src="https://cs.uwatering.com/icon.black.svg" alt="CS Webring" style="width: 24px; height: auto; opacity: 0.8;"/>
+            </a>
+            <a href="https://cs.uwatering.com/#emma-x1.github.io/?nav=next">→</a>
+        </div>
+    </div>
 </div>
 
 <style>
-    div{
+    a{
+        color: inherit;
+        text-decoration: none;
+    }
+    .container{
         display: flex;
         justify-content: center;
         align-items: center;
@@ -28,6 +44,7 @@
         position: relative;
     }
     .logos{
+        margin: 0.5rem;
         display: inline;
         align-items: center;
         gap: 2rem;
@@ -35,5 +52,8 @@
     .logos img{
         height: 16px;
         width: auto;
+    }
+    .watering{
+        margin: 0.5rem;
     }
 </style>
