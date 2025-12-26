@@ -44,9 +44,9 @@
 	{#if open}
 		<nav class="menu">
 			<a href="/" onclick={() => (open = false)}><img src={ signature }></a>
-			<a href="/#work" onclick={() => (open = false)}>Work Experience</a>
+			<a href="/#work" onclick={() => (open = false)}>Work</a>
 			<a href="/#projects" onclick={() => (open = false)}>Projects</a>
-			<a href="/#misc" onclick={() => (open = false)}>Miscellaneous</a>
+			<a href="/#misc" onclick={() => (open = false)}>Misc</a>
 			<a href="/writing" onclick={() => (open = false)}>Writing</a>
 		</nav>
 	{/if}
@@ -91,7 +91,7 @@
 
 	.menu{
 		position:absolute;
-		top: 35%;
+		top: 80%;
 		right: 0;
 		display: flex;
 		flex-direction: column;

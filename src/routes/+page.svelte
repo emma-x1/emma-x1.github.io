@@ -1,31 +1,37 @@
 <script>
-    import Header from './Header.svelte';
-    import Work from './Work.svelte';
-    import Projects from './Projects.svelte';
-    import Misc from './Misc.svelte';
-    import Divider from './Divider.svelte';
-    import Footer from './Footer.svelte';
+    import Header from '$lib/components/Header.svelte';
+    import Work from '$lib/components/Work.svelte';
+    import Projects from '$lib/components/Projects.svelte';
+    import Misc from '$lib/components/Misc.svelte';
+    import Divider from '$lib/components/Divider.svelte';
+    import Footer from '$lib/components/Footer.svelte';
 </script>
 
-<Header />
-<Divider />
-<!--
-<Work />
-<Divider />
-<Projects />
-<Divider />
-<Misc />
-<Divider />
--->
-<Footer />
 
-
-
+<main class="page">
+    <Header />
+    <Divider />
+    <Work />
+    <Divider />
+    <!--
+    <Projects />
+    <Divider />
+    -->
+    <Misc />
+    <Divider />
+    <Footer />  
+</main>
 
 <style lang="css">
 :root {
     --main-light:#F2E9E4;
     background-color: var(--main-light);
+}
+
+.page{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 h1 {

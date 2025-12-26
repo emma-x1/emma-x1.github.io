@@ -24,7 +24,7 @@
 <style>
     .entrypoint {
         width: 100%;
-        height: 82vh;
+        height: 80vh;
 
         display: flex;
         justify-content: center;

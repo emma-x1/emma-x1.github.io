@@ -10,6 +10,7 @@
 <li>Svelte & TypeScript</li>
 <li>GoLang & Haskell</li>
 
+<!--
 <section class="writing-index">
 	<h1>Writing</h1>
 
@@ -24,6 +25,7 @@
 		{/each}
 	</ul>
 </section>
+-->
 
 <style>
 	.writing-index {
