@@ -2,6 +2,7 @@
     import github from '$lib/assets/social-github.png';
     import linkedin from '$lib/assets/social-linkedin.png';
     import x from '$lib/assets/social-x.png';
+    import pencil from '$lib/assets/pencil.png';
 </script>
 
 <div class=container>
@@ -9,6 +10,9 @@
         <p> Emma Xing </p>
     </a>
     <div class=logos>
+        <a href="/writing">
+            <img src={pencil}/>
+        </a>
         <a href="https://www.linkedin.com/in/emmaxing/">
             <img src={linkedin}/>
         </a>

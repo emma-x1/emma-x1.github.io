@@ -1,26 +1,28 @@
 <script lang="ts">
-    export let data;
+	import { formatDate } from '$lib/utils'
+	import * as config from '$lib/config'
+
+	let { data } = $props()
 </script>
 
 <h1>Writing</h1>
 <p>I've found that the way that I learn best is through writing and synthesizing.</p>
 <p>Currently, I'm focused on: </p>
-<li>Machine learning (RL, diffusion models, attention sparsity)</li>
-<li>Data structures and algorithms (through Skiena's algorithms)</li>
-<li>Svelte & TypeScript</li>
-<li>GoLang & Haskell</li>
+<ul class="tight-list">
+	<li>Exploring my interests in machine learning (RL, diffusion models, attention sparsity)</li>
+	<li>Enhancing my fundamentals in data structures and algorithms (through Skiena's algorithms)</li>
+	<li>Building with frontend frameworks & languages Svelte & TypeScript</li>
+	<li>Learning GoLang & Haskell</li>
+</ul>
 
 <!--
-<section class="writing-index">
-	<h1>Writing</h1>
-
-	<ul>
+<section>
+	<h2>Posts</h2>
+	<ul class="posts">
 		{#each data.posts as post}
-			<li>
-				<a href={`/writing/${post.slug}`}>
-					<h2>{post.title}</h2>
-					<time>{post.date}</time>
-				</a>
+			<li class="post">
+				<a href={post.slug} class="title">{post.title}</a>
+				<p class="date">{formatDate(post.date)}, {post.description}</p>
 			</li>
 		{/each}
 	</ul>
@@ -45,5 +47,34 @@
 	time {
 		font-size: 0.9rem;
 		opacity: 0.6;
+	}
+
+	.tight-list {
+		list-style-type: disc;   
+		margin: 0.8rem;
+		line-height: 1;
+	}
+
+	.posts {
+		display: grid;
+		gap: var(--size-7);
+
+		.post {
+			max-inline-size: var(--size-content-3);
+
+			&:not(:last-child) {
+				border-bottom: 1px solid var(--border);
+				padding-bottom: var(--size-7);
+			}
+
+			.title {
+				font-size: var(--font-size-fluid-3);
+				text-transform: capitalize;
+			}
+
+			.date {
+				color: var(--text-2);
+			}
+		}
 	}
 </style>
