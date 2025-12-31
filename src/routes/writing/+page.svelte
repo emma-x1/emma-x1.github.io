@@ -15,19 +15,17 @@
 	<li>Learning GoLang & Haskell</li>
 </ul>
 
-<!--
 <section>
 	<h2>Posts</h2>
 	<ul class="posts">
 		{#each data.posts as post}
 			<li class="post">
-				<a href={post.slug} class="title">{post.title}</a>
+				<a href={`/writing/${post.slug}`} class="title">{post.title}</a>
 				<p class="date">{formatDate(post.date)}, {post.description}</p>
 			</li>
 		{/each}
 	</ul>
 </section>
--->
 
 <style>
 	.writing-index {

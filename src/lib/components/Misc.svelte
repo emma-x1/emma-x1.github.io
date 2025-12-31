@@ -1,4 +1,4 @@
-<h2 id="misc">Miscellaneous</h2>
+<h2 id="misc">Etc.</h2>
 <p>There's a lot to love outside of tech.</p>
 <li>My favourite way to destress is to run. I ran the Toronto Half Marathon this year, and my current Strava streak is about 35 weeks long.</li>
 <li>If I could, I'd read all the time. I consume writing voraciously - whether that's <a href="https://www.goodreads.com/user/show/185891057-emma">novels</a>, blog posts, or Substack articles.</li>
