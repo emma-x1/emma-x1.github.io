@@ -15,6 +15,7 @@
 	<li>Learning GoLang & Haskell</li>
 </ul>
 
+<!--
 <section>
 	<h2>Posts</h2>
 	<ul class="posts">
@@ -26,6 +27,7 @@
 		{/each}
 	</ul>
 </section>
+-->
 
 <style>
 	.writing-index {
