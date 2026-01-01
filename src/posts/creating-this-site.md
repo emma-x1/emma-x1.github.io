@@ -31,7 +31,7 @@ This site was built using Svelte, SvelteKit, and Markdown for these blog posts. 
 
 I found the most interesting part to be the way that blog posts are rendered. Blog posts all follow the same format - title, date, content - and thus can be stored as markdown files. In order to integrate markdown into the SvelteKit setup, I used mdsvex, which preprocesses `.md` files and turns them into Svelte components - I followed [this guide](https://joyofcode.xyz/sveltekit-markdown-blog). Rather than hard-coding posts, we can add posts simply by adding a new markdown file, and they are all discovered by a globbing pattern and turned into data, exposed at the `api/posts` route. This data is rendered at `/writing/[post-name]` - `[post-name]` is matched to the URL, and the corresponding markdown file is renders it. These dynamics routes are a runtime concept - when a request comes in (a user visits the site), we load the markdown file and send a response.
 
-Note that if you've enabled prerendering for the entire site (which you'll have to do ), you'll need to 
+There are some restrictions as to what content can be prerendered (compiled to HTML at build time). 
 
 The overall model I've clarified is markdown files -> modules -> data -> UI.
 

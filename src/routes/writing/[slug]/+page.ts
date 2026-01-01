@@ -1,6 +1,14 @@
 import { error } from '@sveltejs/kit'
 
-export const prerender = false;
+export const prerender = true;
+
+export const entries: EntryGenerator = async () => {
+    const posts = import.meta.glob('../../../posts/*.md');
+  
+    return Object.keys(posts).map((path) => ({
+      slug: path.split('/').pop()?.replace('.md', '')
+    }));
+  };  
 
 export async function load({ params }){
     try {
