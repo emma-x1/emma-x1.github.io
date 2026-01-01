@@ -1,9 +1,9 @@
 ---
-title: First post
-description: First post.
-date: '2023-4-14'
+title: F25 Term Recap
+description: Working as a Machine Learning Software Engineer at RBC Borealis
+date: '2026-01-01'
 categories:
-  - sveltekit
-  - svelte
+  - work
 published: false
 ---
+

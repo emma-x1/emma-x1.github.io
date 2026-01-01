@@ -1,10 +1,9 @@
 ---
-title: Second
-description: Second post.
-date: '2023-4-16'
+title: Project Vim
+description: Creating a clone of Vm text editor in C++ with 
+date: '2026-01-01'
 categories:
-  - sveltekit
-  - svelte
+  - C++
 published: false
 ---
 

@@ -10,10 +10,11 @@
 	<meta property="og:title" content={data.meta.title} />
 </svelte:head>
 
+<a href="/writing">Back to Writing</a>
 <article>
 	<hgroup>
 		<h1>{data.meta.title}</h1>
-		<p>Published at {formatDate(data.meta.date)}</p>
+		<p>{formatDate(data.meta.date)}</p>
 	</hgroup>
 
 	<div class="tags">
