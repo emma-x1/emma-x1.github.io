@@ -1,7 +1,7 @@
 ---
 title: Introduction to Machine Learning
 description: ML, RL, and Attention Sparsity
-date: '2026-01-02'
+date: '2026-01-20'
 categories:
   - machine learning
 published: true
