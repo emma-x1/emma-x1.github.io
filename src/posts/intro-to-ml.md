@@ -6,7 +6,7 @@ categories:
   - machine learning
 published: true
 ---
-*Note - this is a living, unifinished post.*
+*Note - this is a living, unfinished post that will keep growing as I keep learning.*
 
 Machine learning and AI, right now, feels very loud. There's a huge spectrum of how deeply we, as software engineers and developers, understand how the technology works as well as how we can use it effectively - two ideas that are not necessarily tightly correlated. I feel as though it's crucial to develop an aptitude in both - this is a summary on my current perception of ML from the ground up. 
 
