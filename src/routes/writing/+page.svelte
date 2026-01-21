@@ -3,6 +3,7 @@
 	import * as config from '$lib/config'
 
 	let { data } = $props()
+	import Footer from '$lib/components/Footer.svelte'
 </script>
 
 <h1>Writing</h1>
@@ -76,3 +77,5 @@
 		}
 	}
 </style>
+
+<Footer />

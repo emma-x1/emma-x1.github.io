@@ -6,7 +6,7 @@
 </script>
 
 <div class=container>
-    <a href="emma-x1.github.io/">
+    <a href="/">
         <p> Emma Xing </p>
     </a>
     <div class=logos>

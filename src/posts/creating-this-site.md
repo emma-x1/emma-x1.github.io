@@ -1,7 +1,7 @@
 ---
 title: Creating this site
 description: SvelteKit + Markdown static site & blog
-date: '2025-12-31'
+date: '2026-01-01'
 categories:
   - sveltekit
   - svelte
