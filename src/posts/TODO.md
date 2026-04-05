@@ -12,3 +12,8 @@ published: false
 - Dwarkesh podcast
 - AI bio
 - Mech interp
+
+- finite state automata
+- ai memory architectures
+
+- layers of managing context/ai architecture overview layers 
