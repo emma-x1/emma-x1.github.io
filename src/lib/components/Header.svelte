@@ -7,9 +7,9 @@
 <div class="entrypoint">
     <div class="entrypoint-content">
         <h1>Hi, I'm Emma Xing.</h1>
-        <em><p>Currently working as a Member of Technical Staff at TextQL & studying CS at the University of Waterloo.</p></em>
+        <em><p>Currently working as a Member of Technical Staff at TextQL</p></em>
+        <em><p>& studying CS at the University of Waterloo.</p></em>
         <p>I’m a software engineer interested in cultivating authenticity.</p>
-        <p>I’m exploring both full stack and machine learning roles.</p>
         <p>I’m passionate about building community and leveraging tech for good.</p>
         <div>
         <em><p>If this resonates with you, let's connect!</p></em>
