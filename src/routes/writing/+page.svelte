@@ -8,12 +8,12 @@
 
 <h1>Writing</h1>
 <p>I've found that the way that I learn best is through writing and synthesizing.</p>
-<p>Currently, I'm focused on: </p>
+<p>Broadly, I'm interested in: </p>
 <ul class="tight-list">
-	<li>Exploring my interests in machine learning (RL, diffusion models, attention sparsity)</li>
-	<li>Enhancing my fundamentals in data structures and algorithms</li>
-	<li>Building with frontend frameworks & languages Svelte & TypeScript</li>
-	<li>Learning GoLang & Haskell</li>
+	<li>Interpretability in AI - how do we know what we know?</li>
+	<li>Applying ML to bio and neuro systems to understand ourselves and science better</li>
+	<li>Agentic AI and data</li>
+	<li>Using tech thoughtfully and building the right thing</li>
 </ul>
 
 <section>
