@@ -36,6 +36,9 @@
 		"vite": "^7.2.6"
 	},
 	"dependencies": {
-		"mermaid": "^11.13.0"
+		"katex": "^0.16.45",
+		"mermaid": "^11.14.0",
+		"rehype-katex": "^7.0.1",
+		"remark-math": "^6.0.0"
 	}
 }

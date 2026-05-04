@@ -6,6 +6,21 @@
 	import logo from '$lib/assets/logo-dark.png';
 	import signature from '$lib/assets/signature-rotated-dark.png';
 
+	import 'katex/dist/katex.min.css';
+	import mermaid from 'mermaid';
+
+	onMount(async () => {
+		mermaid.initialize({
+		startOnLoad: true,
+		theme: 'default'
+		});
+
+		await mermaid.run({
+		querySelector: '.mermaid'
+		});
+	});
+
+
 	let { children } = $props();
 
 	let open = $state(false);
