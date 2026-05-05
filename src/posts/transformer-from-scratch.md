@@ -68,9 +68,10 @@ Transformer --> C[Logits]
     - We add `PosEmbed`, a lookup table of shape `[n_ctx, d_model]` to the same tokens of shape `[batch, n_ctx]`, getting another matrix of size `[batch, n_ctx, d_model]`.
       - Intuition: We need to add positional information to our tensor: the sentence fragment "who I am" is different than "who am I." We basically do the same thing as in embed, but map the token positions rather than the values themselves. This means it's the same across each sequence in the batch (they're all made up of <token1>, <token2>, ...) so each row is identical.
   - Next is the attention block, which consists of a `LayerNorm`, followed by `Attention`, then another `LayerNorm` and an `MLP` layer
-    - In `LayerNorm`, we normalize the matrix, making sure values don't get too large or small. We have a vector of dimension `[d_model]` of ones (weights) and another of zeros (biases). These can be tuned as the model trains! We normalize by substracting the average (making the mean 0) and scaling by variance (making the variance 1). Then, we multiply by the weight and subtract the bias to 'undo' normalization for specific dimensions.
+    - In `LayerNorm`, we normalize the matrix, making sure values don't get too large or small. We have a vector of dimension `[d_model]` of ones (weights) and another of zeros (biases). These are tuned as the model trains. We normalize by substracting the average (making the mean 0) and scaling by variance (making the variance 1). Then, we multiply by the weight and subtract the bias to 'undo' normalization for specific dimensions.
       - Intuition: we normalize the entire matrix to return to a baseline range of values, then allow the trained model to undo some of the normalization to emphasize certain dimensions as needed.
     - Next is `Attention` (all you need!). There's actually many `heads` of atttention, each capturing different levels of dependencies between tokens. 
+      - Intuition: query and key tell us where dependencies between tokens occur. Value tells how much we care about that dependency. We mix these to give us the attention pattern, project that onto 
 
 In the actual GPT-2 model (as well as in our implementation), we use the following parameters:
 ```
@@ -88,7 +89,7 @@ There's a key distinction between model *training* and model *inference* - durin
 
 # Some Additional Exploration
 ## Hardware Considerations
-I'm running on a
+I'm running on an Apple M3.
 mps cpu gpu
 
 ## Compares to Models Today
@@ -99,6 +100,11 @@ The process of tokenizing (converting raw input words to tokens) uses Byte-Pair 
 I wonder if there's a different or more efficient way of tokenizing - maybe a more efficient algorithm or one that's independent of the English language? 
 
 ## Aside 2: Attention
+this attention - self. others?
+why output
+- Why use `W_O` and `b_O` at all? I'd previously heard about the query-key matrices and the value matrix, but not the output. In the attention layer, we create an intermediate matrix `z` of shape `[batch, query_pos, n_heads, d_head]`. This is a mix of the attention scores (from `query` and `key`, indicating how much information each relationship holds), and values (from `value`, indicating ho)
+
+
 
 ## Transformer Secrets
 A collection of miscellaneous rabbitholes I discovered - the more you know, the more you realize you don't know.
@@ -111,6 +117,9 @@ My version of the GPT-2 notebook is here, and it goes through the math and code 
 
 TODO talk about process
 can outsource thinking but not understanding
+develooping intuition - why is this layer here? why this operation? why adding instead of dot producting? efficiency and 
+there's still some mystery
+and the more you know the more you realize you don't know
 
 # Conclusion
 there's sooooo much FUN stuff here. BPE??? attention??? like we can just play.
