@@ -133,18 +133,19 @@ Today's models have come a long way since [GPT-2](https://cdn.openai.com/better-
   - We use LayerNorm, modern models use [RMSNorm](https://arxiv.org/pdf/1910.07467), a normalization that is more computationally efficient by taking the root mean square norm.
   - GELU is often also switched out in favour of [SwiGLU](https://arxiv.org/abs/2002.05202), or 'swish gated linear unit,' which, by "divine benevolence," provides better results in training.
 - There is also a lot of work done in efficiency, including sparse attention and kv-caching
-- Models are also now trained on significantly more data, in line with ideas of [The Bitter Lesson](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)
+- Models are also now trained on significantly more data, improving performance drastically, as in line with ideas of [The Bitter Lesson](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)
 - There's also more to the pipeline than just the base model - there's mid-training and post-training stages, some of which includes supervised fine-tuning (SFT) and reinforcement learning with human feedback (RLHF). There's even reasoning models (which use RL) and agentic systems (which combine the base model with a harness).
 Though the details of implementation have changed, the foundational idea - the transformer architecture - has stayed constant, which makes GPT-2 a good starting point for understanding most modern transformer-based models.
 
 ## Aside 1: Tokenizing
-The process of tokenizing (converting raw input words to tokens) uses Byte-Pair Encoding (shoutout CS240E at Waterloo!), a process of encoding that uses a dynamic dictionary. We start with a dictionary having tokens for individual letters (ie. `a=1, b=2, c=3` - a bit of an oversimplication, but it gives you the general idea), and merging the most common groups of sequences to create a vocabulary of short strings (ie. the pair `a` + `b` occurs often, so we create in our dictionary `ab=4`), some of which are complete words and others are not. This forms our vocabulary of tokens, where each string corresponds to an integer.
+The process of tokenizing (converting raw input words to tokens) uses Byte-Pair Encoding (at first a text compression algorithm - shoutout CS240E at Waterloo!), a process of encoding that uses a dynamic dictionary. We start with a dictionary having tokens for individual bytes (ie. almost like `a=1, b=2, c=3` - a bit of an oversimplication, but it gives you the general idea), and merging the most common groups of sequences to create a vocabulary of short strings (ie. the pair `a` + `b` occurs often, so we create in our dictionary `ab=4`), some of which are complete words and others are not. This forms our vocabulary of tokens, where each string corresponds to an integer.
 
-I wonder if there's a different or more efficient way of tokenizing - maybe a more efficient algorithm or one that's independent of the English language? 
+There's actually a lot of variations of tokenizing - we can encode bytes themselves on a word-by-word basis, as GPT-2 does, or we can [treat entire strings as a stream](https://arxiv.org/abs/1808.06226). We can use BPE to build up our dictionary, or we can use unigram to successively [prune it down](https://huggingface.co/learn/llm-course/en/chapter6/7). There's even [token-free models](https://arxiv.org/html/2406.19223v1) which remove the tokenization step entirely. Interestingly, some  note that models seem to 'think' more efficiently in Chinese, where the information held in each token could be denser than their English counterparts, but that [claim is contentious](https://arxiv.org/html/2604.14210v1) - English is the primary language that appears in most model training data, which gives it a performance advantage despite the density difference. Overall though, it's interesting to see different approaches to pre-processing text to maximize efficiency (reducing the number of tokens needed for a given source/response) while staying true from the meaning of the text. It's interesting to note the anglo-centric paradigm that this creates (a bigger question for the cultural implications of an AI revolution). Separately, I wondered whether it might be possible to develop a machine-first language that a model can use to 'think' or pass information to other models. This, I found, is a topic of frontier research - the idea of residual coupling involves directly passing residual streams in communication between models, rather than taking one model's output and converting from stream -> tokens -> English and back to stream.
 
 ## Aside 2: Attention
-The attention presented here is self-attention - each token attends to other tokens in the same sequence. why output
-- Why use `W_O` and `b_O` at all? I'd previously heard about the query-key matrices and the value matrix, but not the output. In the attention layer, we create an intermediate matrix `z` of shape `[batch, query_pos, n_heads, d_head]`. This is a mix of the attention scores (from `query` and `key`, indicating how much information each relationship holds), and values (from `value`, indicating ho)
+The attention presented here is self-attention - each token attends to other tokens in the same sequence. We can actually trace the origins of attention to translation tasks - there, attention was done between each token of the input sentence, and each token of the translation. 
+
+I wondered why we used `W_O` and `b_O` at all - the output matrices. I'd previously heard about the query-key matrices and the value matrix, but not the output. In the attention layer, we create an intermediate matrix `z` of shape `[batch, query_pos, n_heads, d_head]`. This is a mix of the attention scores (from `query` and `key`, indicating how much information each relationship holds), and values (from `value`, indicating the value of the information itself).
 
 to build this intuition - not only to understand the current architecture but to be able to come up with it from first principles, i guess it's:
 
@@ -152,6 +153,9 @@ when we cast from one shape to another, there's loss of information there. we wa
 heads don't interact
 
 what does that mean, the heads landing in each dimension? 
+
+Optimizations made - sparse attention, grouped query attention
+sliding window etc
 ```
 Hint 2: Each head produces a d_head=64 dimensional output. Without W_O, head 0's output always lands in dimensions 0-63 of the residual stream, head 1 in 64-127, etc. What does W_O change about that?
 
@@ -243,7 +247,7 @@ understanding why he wrote the thing
 ```
 
 # Conclusion
-there's sooooo much FUN stuff here. BPE??? attention??? like we can just play.
+There's so much to discover in the architecture of the transformer, and though it feels like a 'solved problem,' there's actually so many areas worth digging into. It makes me wonder how much of today's architectural underpinnings 
 
 using ai to learn
 
