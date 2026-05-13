@@ -96,15 +96,44 @@ To make training more efficient, then, we can get more training out of each piec
 
 # Some Additional Exploration
 ## Hardware Considerations
-The word 'compute' has been a topic of much discussion lately, and what that really centers around is a computer's ability to do calculations and run instructions - all handled by its CPU (central processing unit) and GPU (graphics processing unit).
-A quick 101: 
-I'm running the notebook on an Apple M3. 
-mps cpu gpu
+The word 'compute' has been a topic of much discussion lately, and what that really centers around is a computer's ability to do calculations and run instructions - all handled by its CPU (central processing unit) and GPU (graphics processing unit). Each of these (as well as the [newest TPUs](https://blog.google/innovation-and-ai/products/difference-cpu-gpu-tpu-trillium/)) are chips that work as processors.
+
+A [quick 101](https://www.cdw.com/content/cdw/en/articles/hardware/cpu-vs-gpu.html): 
+A CPU is a chip connected to the motherboard. 
+- Its functions include:
+  - Fetching instructions from memory:getting  instructions from RAM
+  - Decoding: instructions can include loading numbers, processing logic, storing, I/O, comparing, jumping
+  - Executing: converting instructions to electric signals and acting 
+- Key features include:
+  - Cores: multiple physical processors to do work
+  - Multithreading: delegating work across multiple threads in a single core
+  - Cache: a more direct source of memory than RAM
+  - Memory management unit: manages the cache and usage of the RAM
+  - Control unit: orchestrating RAM, logic unit, and I/O in accordance with instructions
+A GPU is a more specialized chip, first created to render images/video.
+- It can be either independent from the motherboard, or integrated
+- GPUs break tasks up and parallelize them, and have many more cores to be able to handle a much higher volume of computation at once
+- This lends itself nicely to both gaming and heavy computation-intensive (especially matrix multiplication-intensive) AI workloads 
+
+I'm running the notebook on an Apple M3 - the [M3 itself is a chip system](https://en.wikipedia.org/wiki/Apple_M3) that includes the CPU and GPU. Mine is an 8-core CPU + an 8-10 core GPU - there's a lot more fascinating parts to this, including a neural processing unit (NPU) accelerator - more used for inference than training - and a Unified Memory system, but that'll have to wait for another post. 
+
+You'll notice that in the notebook, we run:
+```
+device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+print(device)
+device = "cpu" # hard-code, some operations not yet supported on mps
+```
+[mps](https://docs.pytorch.org/docs/2.11/notes/mps.html) is what translates between Metal (Apple's low-level graphics/math API, similar to NVIDIA's CUDA), and PyTorch. We do have mps available, but 
+it's a much newer system and so [many PyTorch operations aren't written for Metal](https://github.com/pytorch/pytorch/issues/77764) yet. Instead, we use the CPU, which, while slower, is reliable and enough for our small example.
 
 ## Compares to Models Today
+Today's models have come a long way since [GPT-2](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf), which was released in 2019. Meta [open sources their 'herd'](https://ai.meta.com/research/publications/the-llama-3-herd-of-models/) of models - key differences include:
+- Architectural changes:
+- Training math:
+- Inference optimization:
 
 ## Aside 1: Tokenizing
-The process of tokenizing (converting raw input words to tokens) uses Byte-Pair Encoding (shoutout CS240E at Waterloo!), a process of encoding that uses a dynamic dictionary. We start with a dictionary having tokens for individual letters (ie. `a=1, b=2, c=3` - a bit of an oversimplication), and merging the most common groups of sequences to create a vocabulary of short strings (ie. the pair `a` + `b` occurs often, so we create in our dictionary `ab=4`), some of which are complete words and others are not. This forms our vocabulary of tokens, where each string corresponds to an integer.
+The process of tokenizing (converting raw input words to tokens) uses Byte-Pair Encoding (shoutout CS240E at Waterloo!), a process of encoding that uses a dynamic dictionary. We start with a dictionary having tokens for individual letters (ie. `a=1, b=2, c=3` - a bit of an oversimplication, but it gives you the general idea), and merging the most common groups of sequences to create a vocabulary of short strings (ie. the pair `a` + `b` occurs often, so we create in our dictionary `ab=4`), some of which are complete words and others are not. This forms our vocabulary of tokens, where each string corresponds to an integer.
 
 I wonder if there's a different or more efficient way of tokenizing - maybe a more efficient algorithm or one that's independent of the English language? 
 
@@ -211,6 +240,8 @@ understanding why he wrote the thing
 
 # Conclusion
 there's sooooo much FUN stuff here. BPE??? attention??? like we can just play.
+
+using ai to learn
 
 context, memory, etc
 
