@@ -128,9 +128,14 @@ it's a much newer system and so [many PyTorch operations aren't written for Meta
 
 ## Compares to Models Today
 Today's models have come a long way since [GPT-2](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf), which was released in 2019. Meta [open sources their 'herd'](https://ai.meta.com/research/publications/the-llama-3-herd-of-models/) of models - key differences include:
-- Architectural changes:
-- Training math:
-- Inference optimization:
+- Architectural changes: 
+  - While we use simple embeddings (essentially a lookup table), most modern architectures use rotary positional embeddings (RoPE, rotating embeddings for more accurate relative distance between vectors)
+  - We use LayerNorm, modern models use [RMSNorm](https://arxiv.org/pdf/1910.07467), a normalization that is more computationally efficient by taking the root mean square norm.
+  - GELU is often also switched out in favour of [SwiGLU](https://arxiv.org/abs/2002.05202), or 'swish gated linear unit,' which, by "divine benevolence," provides better results in training.
+- There is also a lot of work done in efficiency, including sparse attention and kv-caching
+- Models are also now trained on significantly more data, in line with ideas of [The Bitter Lesson](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)
+- There's also more to the pipeline than just the base model - there's mid-training and post-training stages, some of which includes supervised fine-tuning (SFT) and reinforcement learning with human feedback (RLHF). There's even reasoning models (which use RL) and agentic systems (which combine the base model with a harness).
+Though the details of implementation have changed, the foundational idea - the transformer architecture - has stayed constant, which makes GPT-2 a good starting point for understanding most modern transformer-based models.
 
 ## Aside 1: Tokenizing
 The process of tokenizing (converting raw input words to tokens) uses Byte-Pair Encoding (shoutout CS240E at Waterloo!), a process of encoding that uses a dynamic dictionary. We start with a dictionary having tokens for individual letters (ie. `a=1, b=2, c=3` - a bit of an oversimplication, but it gives you the general idea), and merging the most common groups of sequences to create a vocabulary of short strings (ie. the pair `a` + `b` occurs often, so we create in our dictionary `ab=4`), some of which are complete words and others are not. This forms our vocabulary of tokens, where each string corresponds to an integer.
@@ -138,8 +143,7 @@ The process of tokenizing (converting raw input words to tokens) uses Byte-Pair 
 I wonder if there's a different or more efficient way of tokenizing - maybe a more efficient algorithm or one that's independent of the English language? 
 
 ## Aside 2: Attention
-this attention - self. others?
-why output
+The attention presented here is self-attention - each token attends to other tokens in the same sequence. why output
 - Why use `W_O` and `b_O` at all? I'd previously heard about the query-key matrices and the value matrix, but not the output. In the attention layer, we create an intermediate matrix `z` of shape `[batch, query_pos, n_heads, d_head]`. This is a mix of the attention scores (from `query` and `key`, indicating how much information each relationship holds), and values (from `value`, indicating ho)
 
 to build this intuition - not only to understand the current architecture but to be able to come up with it from first principles, i guess it's:
@@ -250,3 +254,8 @@ building IN the model and building AROUND the model
 interpretability, science, etc is so rich.
 
 next - a visual guide + toy example
+
+## Resources
+Embedded in this blog, as well as the following:
+- [An excellent visualization of GPT-2](https://bbycroft.net/llm)
+- [Neel Nanda's sample notebook](https://colab.research.google.com/github/neelnanda-io/Easy-Transformer/blob/clean-transformer-demo/Clean_Transformer_Demo_Template.ipynb#scrollTo=ZO3ZApEZdHTV)
