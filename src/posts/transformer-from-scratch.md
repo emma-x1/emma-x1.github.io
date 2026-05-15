@@ -1,10 +1,10 @@
 ---
 title: Transformer From Scratch
 description: Working through Neel Nanda's 'GPT-2 From Scratch'
-date: '2026-05-01'
+date: '2026-05-15'
 categories:
   - machine learning
-published: false
+published: true
 ---
 
 I've wanted to dive deeper into the fundamentals of AI for a while now - it feels a little bit magical, and a little bit wrong, to operate alongside AI without a strong understanding of how the underlying mechanisms work. Naturally, I had to write a transformer, and Neel Nanda's "[GPT-2 From Scratch](https://www.youtube.com/watch?v=dsjUDacBw8o&list=PL7m7hLIqA0hoIUPhC26ASCVs_VrqcDpAz&index=2)" was my resource of choice. My adaptation (source notebook [here](https://github.com/emma-x1/ml-from-scratch/blob/main/transformers.ipynb) - I have Andrej Karpathy's micrograd tutorial in the same repo) follows his implementation loosely, but is adapted to use fewer dependencies. I instead used only PyTorch and NumPy, loading the GPT-2 model from HuggingFace to compare and verify. 
@@ -149,121 +149,28 @@ The attention presented here is self-attention (GPT-2 is a [decoder-only model](
 
 I wondered why we used `W_O` and `b_O` at all - the output matrices. I'd previously heard about the query-key matrices and the value matrix, but not the output. In the attention layer, we create an intermediate matrix `z` of shape `[batch, query_pos, n_heads, d_head]`. This is a mix of the attention scores (from `query` and `key`, indicating how much information each relationship holds), and values (from `value`, indicating the value of the information itself).
 
-Once we have these heads of attention then, each of dimension `d_head`, we could just concatenate them to get our desired `n_heads * d_head = d_model` size. However, doing that would mean each head of attention is siloed. 
+Once we have these heads of attention then, each of dimension `d_head`, we could just concatenate them to get our desired `n_heads * d_head = d_model` size. However, doing that would mean each head of attention is siloed - the relationships learned by attention head 1 only apply to dimensions `1-d_head`, head 2 applies to dimensions `d_head+1 - 2 * d_head`, etc. These output matrices, then, are a learned way of combining the heads of attention to combine all of these learned relationships.
 
-when we cast from one shape to another, there's loss of information there. we want to learn the pattern for how we can do that most effectively over our text, rather than just blindly making it mathematically fit. 
-heads don't interact
-
-what does that mean, the heads landing in each dimension? 
-
-Optimizations made - sparse attention, grouped query attention
-sliding window etc
-```
-Hint 2: Each head produces a d_head=64 dimensional output. Without W_O, head 0's output always lands in dimensions 0-63 of the residual stream, head 1 in 64-127, etc. What does W_O change about that?
-
-Hint 3: Think about W_V and W_O together as a pair. Each head computes a rank-d_head update to the residual stream. What does that mean about what each head can express, and why might that be a useful property?
-
-The mechanistic interpretability view is particularly clean here — Neel actually thinks about W_OV = W_V @ W_O as a single matrix per head. What shape is that, and what does it do?
-
-low-rank factorized matrix for each head
-
-A full linear map from 
-d
-m
-o
-d
-e
-l
-→
-d
-m
-o
-d
-e
-l
-d 
-model
-​
- →d 
-model
-​
- 
- would be a 
-768
-×
-768
-768×768
- matrix (
-589
-,
-824
-589,824
- parameters).
-By splitting into 12 heads of 64 dims, we do 
-Q
-⋅
-K
-T
-Q⋅K 
-T
- 
-.
-This creates a 
-1024
-×
-1024
-1024×1024
- (context x context) attention matrix, but it's generated from much smaller vectors.
-Each head is essentially looking for a single specific type of relationship (e.g., "find the previous noun", "find the start of the sentence").
-```
+Attention is a really interesting space - it's one of the bottlenecks in training and inference time, because a standard implementation scales quadratically with sequence length. Thus, there's a lot of interesting development in optimizations one can make - sparse attention, sliding window attention, and linear attention are all methods of reducing the rate at which attention grows. I've worked a bit on inference-time sparse attention, where we aim to select and compute attention only for the query-key combinations that are strongest (I find it helpful to think of an example sentence - in "the cat sat on the mat," for instance, "sat" and "mat" don't have much to do with one another. The key insight is that attention matrices already exhibit sparsity - most values in the attention map are close to zero, so we don't lose much by skipping those values entirely, reducing some of the matrix operations needed). The challenge is being able to identify what patterns exist in attention to know which values we can safely skip without degrading model performance.
 
 ## Transformer Secrets
 A collection of miscellaneous rabbitholes I discovered - the more you know, the more you realize you don't know.
-- [Initialization theory](https://stats.stackexchange.com/questions/637798/why-the-standard-deviation-of-the-bert-weight-initialization-is-0-02-by-default) - we have a mysterious parameter `init_range` set to 0.02 that normalizes our weights. In short, we need to keep our activations (values) within some healthy range to prevent either gradient explosion (if values are too big) or gradients vanishing (if values are too small). 0.02 is empirically tested but still a bit 'magical'.
+- [Initialization theory](https://stats.stackexchange.com/questions/637798/why-the-standard-deviation-of-the-bert-weight-initialization-is-0-02-by-default) - we have a mysterious parameter `init_range` set to 0.02 that normalizes our weights. In short, we need to keep our activations (values) within some healthy range to prevent either gradient explosion (if values are too big) or gradients vanishing (if values are too small). The standard value for this is `1/\sqrt(d_model)`, but OpenAI chose a more conservative 0.02, which is empirically tested but still a bit 'magical'.
 - `einops` is a fascinating library - it makes the code declarative, not imperative so that we can describe by the results we want rather than how we want to do it. It's used to repeat certain values across the matrix - for instance, we can write `einops.repeat(pos_embed, "pos d_model -> batch pos d_model", batch=tokens.size(0))` to copy the positional embedding rows across the full matrix, rather than `pos_embed = pos_embed.unsqueeze(0).expand(tokens.size(0), -1, -1)`.
-- `einsum` comes from "Einstein summation" 
-- gelu - gpt2's new approximation, gelu/relu, projecting up/down to 'think'. tanh and 53.0%
-```Differentiability: ReLU has a "hard" corner at zero. GELU is smooth everywhere, which makes the gradients "nicer" during backpropagation.
-The "Dead ReLU" problem: In ReLU, if a neuron's input is negative, the gradient is 0—it "dies" and stops learning. GELU allows a tiny bit of information to leak through for negative values, which keeps the neuron "alive" even when it's not firing strongly.
-```
-- loss and evaluation
+- Non-linearity is added in the MLP layer, and it's this section that allows the model to learn more complex, non-linear patterns. Recall - we project the residual stream to a higher dimension, activate by applying our GELU function, and project back down. GELU, the Gaussian Error Linear Unit, is an upgrade from ReLU (rectified linear unit). Both are functions: ReLU is defined as `f(x) = max(0, x)`, while GELU is `f(x) = x \cdot \phi(x)` where `\phi(x)` is the cumulative distribution function. Note, then, that ReLU has a sharp corner at x = 0 - values below this all harshly map to 0. This means that in neural networks that use ReLU, large parts of the network 'die' - the gradient flowing backwards to that neuron become zero. GELU solves this problem by creating a smoother curve, ensuring there's always a small gradient. 
+
+It makes me wonder how much of today's architectural underpinnings are a result of intentional choice vs. semi-serendipitous luck.
+
 
 # The Process
-My version of the GPT-2 notebook is here, and it goes through the math and code in a lot more depth. https://github.com/emma-x1/ml-from-scratch/blob/main/transformers.ipynb. Once again, it follows Neel Nanda's excellent GPT-2 From Scratch with minor adaptations to reduce dependencies. 
+My version of the GPT-2 notebook is here, and it goes through the math and code in a lot more depth. https://github.com/emma-x1/ml-from-scratch/blob/main/transformers.ipynb. Once again, it follows Neel Nanda's excellent GPT-2 From Scratch with minor adaptations to reduce dependencies. (Another sidenote - Neel's library simplifies the interface of GPT-2 significantly, which makes testing a lot easier. I now fully understand what prompted the need for EasyTransformer).
 
-TODO talk about process
-can outsource thinking but not understanding
-develooping intuition - why is this layer here? why this operation? why adding instead of dot producting? efficiency and 
-there's still some mystery
-and the more you know the more you realize you don't know
-
-Finicky while testing - WPE 
-```
-HuggingFace's wpe (Standard Approach): Uses a standard "Lookup Table" (nn.Embedding). This requires the developer to generate a second tensor of "position indices" [0, 1, 2...] and pass it into the model alongside the tokens.
-Your PosEmbed (Optimized Approach): Since GPT-2 is almost always used with absolute positions starting from 0, your implementation infers the positions based on the shape of the input.
-Pros: Cleaner API (one less input to the model).
-Cons: Less flexible if you wanted to do "Position hacking" (like telling the model a word is at position 500 when it's actually at position 1).
-
-api inconsistency ughhhh
-understanding why he wrote the thing
-```
+I found that going through this notebook, not just copying but thinking at each point about *why* something was done, and writing it out both in the notebook and in this blog helped me develop an intuition for how a model 'thinks.' For instance, why is this layer placed where it is? Why use a simple concatenation, or a transpose, and why at this particular point? What's the shape of each matrix? There are still so many fascinating choices and quirks in this model architecture that I'm excited to dig into.
 
 # Conclusion
-There's so much to discover in the architecture of the transformer, and though it feels like a 'solved problem,' there's actually so many areas worth digging into. It makes me wonder how much of today's architectural underpinnings 
-
-using ai to learn
-
-understand the WHY and building intuition
-
-context, memory, etc
-
-building IN the model and building AROUND the model
-
-interpretability, science, etc is so rich.
-
-next - a visual guide + toy example
+There's so much to discover in the architecture of the transformer, and it feels like an area ripe for exploration - from attention optimizations to interpretability to applications of the transformer architecture to non-text-based spaces, and neuroscience-inspired novel architectures, the one word I'd use to describe this space is *rich*. The time is now to understand and shape a new form of 'intelligence.'
 
 ## Resources
-Embedded in this blog, as well as the following:
+Embedded throughout this blog, as well as the following:
 - [An excellent visualization of GPT-2](https://bbycroft.net/llm)
 - [Neel Nanda's sample notebook](https://colab.research.google.com/github/neelnanda-io/Easy-Transformer/blob/clean-transformer-demo/Clean_Transformer_Demo_Template.ipynb#scrollTo=ZO3ZApEZdHTV)
