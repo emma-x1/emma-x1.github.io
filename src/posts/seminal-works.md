@@ -1,6 +1,6 @@
 ---
-title: Seminal Works, Pt. 1
-description: An entirely-too short exploration of the writing that has shaped today’s ‘intelligence.’
+title: Seminal Works
+description: An entirely-too short exploration of some of the writing that has shaped today’s ‘intelligence.’
 date: '2026-06-14'
 categories:
   - machine learning

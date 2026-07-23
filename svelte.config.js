@@ -12,7 +12,7 @@ const mdsvexOptions = {
 		remarkMath,
 		remarkMermaid
 	],
-	rehypePlugins: [rehypeKatex],
+	rehypePlugins: [[rehypeKatex, { output: 'html' }]],
 }
 
 /** @type {import('@sveltejs/kit').Config} */

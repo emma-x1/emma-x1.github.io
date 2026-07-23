@@ -29,6 +29,8 @@
 		"mdsvex": "^0.12.6",
 		"prettier": "^3.7.4",
 		"prettier-plugin-svelte": "^3.4.0",
+		"rehype-katex": "^4.0.0",
+		"remark-math": "^3.0.1",
 		"svelte": "^5.45.6",
 		"svelte-check": "^4.3.4",
 		"typescript": "^5.9.3",
@@ -37,8 +39,6 @@
 	},
 	"dependencies": {
 		"katex": "^0.16.45",
-		"mermaid": "^11.14.0",
-		"rehype-katex": "^7.0.1",
-		"remark-math": "^6.0.0"
+		"mermaid": "^11.15.0"
 	}
 }
